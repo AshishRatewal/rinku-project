@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Family ID</title>
+    <style>
+      body {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+      .search-container {
+        text-align: center;
+      }
+      input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        margin-right: 10px;
+      }
+      button {
+        padding: 10px 20px;
+      }
+      .result {
+        margin-top: 20px;
+      }
+      .status {
+        margin-top: 10px;
+        color: green;
+      }
+      .available {
+        color: green;
+      }
+      .not-available {
+        color: red;
+      }
+      table {
+        margin-top: 20px;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-container">
+      <h1>Find Family ID</h1>
+      <input type="text" id="searchField" placeholder="Enter Mobile Number" />
+      <button onclick="searchFamilyID()">Search</button>
+      <div class="result" id="result"></div>
+      <div class="status" id="status"></div>
+    </div>
+
+    <script>
+      let data = [
+        {
+          Name: "NAFE SINGH",
+          "Father/Husband Name": "SARDHA RAM",
+          Mobile: 8607350331,
+        },
+        {
+          Name: "MUKESH DEVI",
+          "Father/Husband Name": "RANJEET",
+          Mobile: 9813032895,
+        },
+        {
+          Name: "VISHAL",
+          "Father/Husband Name": "KRISHAN KUMAR",
+          Mobile: 8684897004,
+        },
+        {
+          Name: "SAHNAJ",
+          "Father/Husband Name": "SHAMSHAD",
+          Mobile: 9518802291,
+        },
+        {
+          Name: "RAM NIWAS",
+          "Father/Husband Name": "KRISHAN CHANDER",
+          Mobile: 9991285245,
+        },
+        {
+          Name: "MONU DEVI",
+          "Father/Husband Name": "RINKU SHARMA",
+          Mobile: 9991949402,
+        },
+        {
+          Name: "DHARAM RAJ",
+          "Father/Husband Name": "LACHHMAN DASS",
+          Mobile: 9728990305,
+        },
+        {
+          Name: "ANURADHA SHARMA",
+          "Father/Husband Name": "SHAKTI SHARMA",
+          Mobile: 9728100056,
+        },
+        {
+          Name: "BAL KISHAN",
+          "Father/Husband Name": "BHAIYA RAM",
+          Mobile: 9728466356,
+        },
+        {
+          Name: "VIKAS KUMAR",
+          "Father/Husband Name": "KARAN SINGH",
+          Mobile: 999260416,
+        },
+        {
+          Name: "ROMA DEVI",
+          "Father/Husband Name": "VINOD KUMAR",
+          Mobile: 8813923236,
+        },
+        {
+          Name: "SEEMA DEVI",
+          "Father/Husband Name": "KRISHAN LAL",
+          Mobile: 9050824413,
+        },
+        {
+          Name: "ANKUR",
+          "Father/Husband Name": "KARAN SINGH",
+          Mobile: 9729927562,
+        },
+        {
+          Name: "AARTI RANI",
+          "Father/Husband Name": "MANJEET",
+          Mobile: 9729727198,
+        },
+        {
+          Name: "RAFIK",
+          "Father/Husband Name": "AKHTAR ALI",
+          Mobile: 7027580517,
+        },
+        {
+          Name: "SNEHA",
+          "Father/Husband Name": "RAJKUMAR",
+          Mobile: 9416110525,
+        },
+        {
+          Name: "SURENDER KUMAR",
+          "Father/Husband Name": "PALA RAM",
+          Mobile: 8295153366,
+        },
+        {
+          Name: "PANKAJ",
+          "Father/Husband Name": "BALWAN",
+          Mobile: 9996450494,
+        },
+        {
+          Name: "AISHA",
+          "Father/Husband Name": "ARSHAD KHAN",
+          Mobile: 7027209853,
+        },
+        {
+          Name: "MUKESH KUMAR",
+          "Father/Husband Name": "ROHTASH",
+          Mobile: 9050866099,
+        },
+        {
+          Name: "PREETI",
+          "Father/Husband Name": "VIKRAM",
+          Mobile: 9996434438,
+        },
+        {
+          Name: "RAKESH",
+          "Father/Husband Name": "ISHWAR",
+          Mobile: 9896152394,
+        },
+        {
+          Name: "SUSHMA",
+          "Father/Husband Name": "ANGREJ",
+          Mobile: 9996589245,
+        },
+        {
+          Name: "RAJNI",
+          "Father/Husband Name": "SUSHIL",
+          Mobile: 8813984289,
+        },
+        {
+          Name: "AARTI",
+          "Father/Husband Name": "SONU",
+          Mobile: 9813015603,
+        },
+        {
+          Name: "VINOD KUMAR",
+          "Father/Husband Name": "SADHU RAM",
+          Mobile: 9813129410,
+        },
+        {
+          Name: "SONIA",
+          "Father/Husband Name": "SATISH",
+          Mobile: 8059016696,
+        },
+        {
+          Name: "SANJEEV",
+          "Father/Husband Name": "JAI BHAGWAN",
+          Mobile: 9050823062,
+        },
+        {
+          Name: "MANJU",
+          "Father/Husband Name": "JASMER",
+          Mobile: 9991248024,
+        },
+        {
+          Name: "PAYAL RANI",
+          "Father/Husband Name": "SUNDER SINGH",
+          Mobile: 7027024752,
+        },
+        {
+          Name: "RISHI PAL",
+          "Father/Husband Name": "MOHINDER SINGH",
+          Mobile: 9813586608,
+        },
+        {
+          Name: "KOMAL",
+          "Father/Husband Name": "SANJAY",
+          Mobile: 8708459947,
+        },
+        {
+          Name: "VIPIN",
+          "Father/Husband Name": "SATISH RANA",
+          Mobile: 9729009636,
+        },
+        {
+          Name: "RUBY RANI",
+          "Father/Husband Name": "RAMBHOOL",
+          Mobile: 8708125145,
+        },
+        {
+          Name: "MAHABIR SINGH",
+          "Father/Husband Name": "SULTAN SINGH",
+          Mobile: 9896682125,
+        },
+        {
+          Name: "SUMAN",
+          "Father/Husband Name": "RANDEEP KUMAR",
+          Mobile: 9899777311,
+        },
+        {
+          Name: "RAMBHOOL",
+          "Father/Husband Name": "BANARASI",
+          Mobile: 9991427874,
+        },
+        {
+          Name: "SHASHI BALA",
+          "Father/Husband Name": "DEVINDER SINGH",
+          Mobile: 9817043477,
+        },
+        {
+          Name: "PARVEEN",
+          "Father/Husband Name": "RISHI RAJ",
+          Mobile: 8930161803,
+        },
+        {
+          Name: "NISHA",
+          "Father/Husband Name": "SUSHIL",
+          Mobile: 9050722704,
+        },
+        {
+          Name: "MANNU",
+          "Father/Husband Name": "MAHENDER SINGH",
+          Mobile: 8168990527,
+        },
+        {
+          Name: "RISHI PAL",
+          "Father/Husband Name": "JAIPAL SINGH",
+          Mobile: 9728010053,
+        },
+        {
+          Name: "MANISHA RANI",
+          "Father/Husband Name": "JITENDER KUMAR",
+          Mobile: 9671802092,
+        },
+        {
+          Name: "VIRENDER PAL",
+          "Father/Husband Name": "SAMAY SINGH",
+          Mobile: 9813507100,
+        },
+        {
+          Name: "REKHA",
+          "Father/Husband Name": "RAM KUMAR",
+          Mobile: 9996555440,
+        },
+        {
+          Name: "AKASH KUMAR",
+          "Father/Husband Name": "ROHTASH SINGH",
+          Mobile: 9416963152,
+        },
+        {
+          Name: "SAPNA",
+          "Father/Husband Name": "AMIT KUMAR",
+          Mobile: 9518425718,
+        },
+        {
+          Name: "RAVINDER SINGH",
+          "Father/Husband Name": "RAJBIR SINGH",
+          Mobile: 9896004343,
+        },
+        {
+          Name: "SUDHA KUMARI",
+          "Father/Husband Name": "RAM SHARAN",
+          Mobile: 9996013222,
+        },
+        {
+          Name: "DUSHYANT",
+          "Father/Husband Name": "KANWAR PAL",
+          Mobile: 9996611733,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "RATTAN SINGH",
+          Mobile: 9996403984,
+        },
+        {
+          Name: "VANDANA",
+          "Father/Husband Name": "VEDPAL",
+          Mobile: 7082706992,
+        },
+        {
+          Name: "SAHIR",
+          "Father/Husband Name": "MAKBUL",
+          Mobile: 9050554684,
+        },
+        {
+          Name: "AASMA",
+          "Father/Husband Name": "SADAKAT",
+          Mobile: 9050970398,
+        },
+        {
+          Name: "JAVED",
+          "Father/Husband Name": "MUDA",
+          Mobile: 9817933070,
+        },
+        {
+          Name: "TAMNNA",
+          "Father/Husband Name": "RUKBAN",
+          Mobile: 8053854570,
+        },
+        {
+          Name: "PRITI",
+          "Father/Husband Name": "GURDEV",
+          Mobile: 7495093461,
+        },
+        {
+          Name: "IMLAK ALI",
+          "Father/Husband Name": "YASIN ALI",
+          Mobile: 9992000690,
+        },
+        {
+          Name: "RAMANPREET",
+          "Father/Husband Name": "HARDEEP SINGH",
+          Mobile: 9671959694,
+        },
+        {
+          Name: "PARVGJ ALI",
+          "Father/Husband Name": "SALIM ALI",
+          Mobile: 9050970398,
+        },
+        {
+          Name: "PARVEEN",
+          "Father/Husband Name": "LAKHMI CHAND",
+          Mobile: 8053457080,
+        },
+        {
+          Name: "PARDEEP KUMAR",
+          "Father/Husband Name": "ATAR SINGH",
+          Mobile: 7988259054,
+        },
+        {
+          Name: "KRISHNA DEVI",
+          "Father/Husband Name": "ROHTASH",
+          Mobile: 8930897489,
+        },
+        {
+          Name: "ROHTASH",
+          "Father/Husband Name": "RAMDIYA",
+          Mobile: 9991486500,
+        },
+        {
+          Name: "NISHA",
+          "Father/Husband Name": "SACHIN KAPOOR",
+          Mobile: 7988742143,
+        },
+        {
+          Name: "KOMAL",
+          "Father/Husband Name": "ASHOK KUMAR",
+          Mobile: 9812960177,
+        },
+        {
+          Name: "BIRBAL",
+          "Father/Husband Name": "TEK CHAND",
+          Mobile: 9996846083,
+        },
+        {
+          Name: "BAL KISHAN",
+          "Father/Husband Name": "MANI RAM",
+          Mobile: 9588556851,
+        },
+        {
+          Name: "VRISHNA",
+          "Father/Husband Name": "RAMDAS",
+          Mobile: 9728462899,
+        },
+        {
+          Name: "RAVI",
+          "Father/Husband Name": "RAJESH",
+          Mobile: 9306988554,
+        },
+        {
+          Name: "MEENA",
+          "Father/Husband Name": "DHARAMBEER",
+          Mobile: 8816005891,
+        },
+        {
+          Name: "VICKY",
+          "Father/Husband Name": "SURESH KUMAR",
+          Mobile: 9817565701,
+        },
+        {
+          Name: "ANJU BALA",
+          "Father/Husband Name": "RAM PARKASH",
+          Mobile: 9671152290,
+        },
+        {
+          Name: "DEVI SINGH",
+          "Father/Husband Name": "RAM CHANDER",
+          Mobile: 9050651193,
+        },
+        {
+          Name: "REENA",
+          "Father/Husband Name": "RAJIV",
+          Mobile: 9050464633,
+        },
+        {
+          Name: "GURMEJ",
+          "Father/Husband Name": "SUKKAR RAM",
+          Mobile: 9813524081,
+        },
+        {
+          Name: "ANU RANI",
+          "Father/Husband Name": "DHARAMBIR SINGH",
+          Mobile: 9671797203,
+        },
+        {
+          Name: "JAIBIR",
+          "Father/Husband Name": "SHAM LAL",
+          Mobile: 9896038126,
+        },
+        {
+          Name: "MANINDER KAUR",
+          "Father/Husband Name": "SUNIL",
+          Mobile: 9991102096,
+        },
+        {
+          Name: "SANJIV KUMAR",
+          "Father/Husband Name": "DHARAM SINGH",
+          Mobile: 9671099217,
+        },
+        {
+          Name: "MANJU DEVI",
+          "Father/Husband Name": "VEDPAL",
+          Mobile: 8059655230,
+        },
+        {
+          Name: "SANDEEP",
+          "Father/Husband Name": "OM PARKASH",
+          Mobile: 9050215161,
+        },
+        {
+          Name: "BIMAL HANS MADAAN",
+          "Father/Husband Name": "SAGAR",
+          Mobile: 9728511340,
+        },
+        {
+          Name: "ANAND",
+          "Father/Husband Name": "SUMER CHAND",
+          Mobile: 9812019974,
+        },
+        {
+          Name: "REKHA RANI",
+          "Father/Husband Name": "MANOJ KUMAR",
+          Mobile: 9306089903,
+        },
+        {
+          Name: "DEEPAK",
+          "Father/Husband Name": "BABU RAM",
+          Mobile: 7357721532,
+        },
+        {
+          Name: "REKHA",
+          "Father/Husband Name": "SURENDER",
+          Mobile: 7988585132,
+        },
+        {
+          Name: "BALJIT SINGH",
+          "Father/Husband Name": "RAMESHWAR SINGH",
+          Mobile: 9813011261,
+        },
+        {
+          Name: "REKHA DEVI",
+          "Father/Husband Name": "SATISH KUMAR",
+          Mobile: 7015529312,
+        },
+        {
+          Name: "RAJESH KUMAR",
+          "Father/Husband Name": "DHARAM PAL SINGH",
+          Mobile: 8053505937,
+        },
+        {
+          Name: "SNEH LATA",
+          "Father/Husband Name": "RAKESH KUMAR",
+          Mobile: 8813840008,
+        },
+        {
+          Name: "SUNIL DUTT",
+          "Father/Husband Name": "OM PARKASH",
+          Mobile: 9813862498,
+        },
+        {
+          Name: "SUNIL KUMAR",
+          "Father/Husband Name": "DEVA SING",
+          Mobile: 9671252146,
+        },
+        {
+          Name: "SUNITA",
+          "Father/Husband Name": "ROHTASH KUMAR",
+          Mobile: 9050513825,
+        },
+        {
+          Name: "ANKIT KUMAR",
+          "Father/Husband Name": "RAMI KUMAR",
+          Mobile: 8708861588,
+        },
+        {
+          Name: "POONAM DEVI",
+          "Father/Husband Name": "MUKESH KUMAR",
+          Mobile: 9467048028,
+        },
+        {
+          Name: "BALJINDER SINGH",
+          "Father/Husband Name": "BABU RAM",
+          Mobile: 8708930842,
+        },
+        {
+          Name: "SANJANA",
+          "Father/Husband Name": "RAJENDER",
+          Mobile: 8168424042,
+        },
+        {
+          Name: "RAJNI MOGHA",
+          "Father/Husband Name": "PANKAJ",
+          Mobile: 9896975759,
+        },
+        {
+          Name: "VINOD KUMAR",
+          "Father/Husband Name": "SUGAN DAS",
+          Mobile: 9991187254,
+        },
+        {
+          Name: "MONIKA",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 8396843648,
+        },
+        {
+          Name: "SATISH KUMAR",
+          "Father/Husband Name": "TARA CHAND",
+          Mobile: 9996668886,
+        },
+        {
+          Name: "BHANWAR SINGH",
+          "Father/Husband Name": "PHOAL SINGH",
+          Mobile: 9991871546,
+        },
+        {
+          Name: "SUDESH DEVI",
+          "Father/Husband Name": "VED PRAKASH",
+          Mobile: 9729188437,
+        },
+        {
+          Name: "KRISHAN KUMAR",
+          "Father/Husband Name": "ISHAM SINGH",
+          Mobile: 9991963921,
+        },
+        {
+          Name: "KOMAL",
+          "Father/Husband Name": "RAVI",
+          Mobile: 8818008822,
+        },
+        {
+          Name: "VIJAY KUMAR",
+          "Father/Husband Name": "DHARAMBIR",
+          Mobile: 7973302024,
+        },
+        {
+          Name: "RUBI SHARMA",
+          "Father/Husband Name": "GAURAV TYAGI",
+          Mobile: 9729628800,
+        },
+        {
+          Name: "SAWAN",
+          "Father/Husband Name": "RAMPAL",
+          Mobile: 8053211377,
+        },
+        {
+          Name: "SUNITA DEVI",
+          "Father/Husband Name": "SUBHASH CHAND",
+          Mobile: 9416935009,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "BEER SINGH",
+          Mobile: 9996062812,
+        },
+        {
+          Name: "BABLI",
+          "Father/Husband Name": "SEWA SINGH",
+          Mobile: 9991120184,
+        },
+        {
+          Name: "PREM SINGH",
+          "Father/Husband Name": "RAMSWAROOP",
+          Mobile: 8059364301,
+        },
+        {
+          Name: "SHANTI DEVI",
+          "Father/Husband Name": "GURDEEP",
+          Mobile: 9588326584,
+        },
+        {
+          Name: "RAJESH CHAUHAN",
+          "Father/Husband Name": "NATHU RAM",
+          Mobile: 9996748295,
+        },
+        {
+          Name: "BRIJMOHAN",
+          "Father/Husband Name": "SURJAN",
+          Mobile: 9991432623,
+        },
+        {
+          Name: "DEVENDER",
+          "Father/Husband Name": "LAL SINGH",
+          Mobile: 9050048980,
+        },
+        {
+          Name: "SUNITA DEVI",
+          "Father/Husband Name": "ROHTASH",
+          Mobile: 9991085461,
+        },
+        {
+          Name: "CHETAN KUMAR",
+          "Father/Husband Name": "JAGE RAM",
+          Mobile: 8930058976,
+        },
+        {
+          Name: "RITA RANI",
+          "Father/Husband Name": "VINOD KUMAR",
+          Mobile: 8168657831,
+        },
+        {
+          Name: "SURENDER SINGH",
+          "Father/Husband Name": "SULTAN SINGH",
+          Mobile: 9991595367,
+        },
+        {
+          Name: "VANDANA",
+          "Father/Husband Name": "JITENDER",
+          Mobile: 9991353737,
+        },
+        {
+          Name: "VIKRANT KUMAR",
+          "Father/Husband Name": "JASWANT SINGH",
+          Mobile: 8816020084,
+        },
+        {
+          Name: "NEETU TOMAR",
+          "Father/Husband Name": "DHEERENDER SINGH",
+          Mobile: 8221818120,
+        },
+        {
+          Name: "SUNIL KUMAR",
+          "Father/Husband Name": "SOMRAJ",
+          Mobile: 9050063658,
+        },
+        {
+          Name: "SUMIT RANA",
+          "Father/Husband Name": "GAJE SINGH",
+          Mobile: 9996616603,
+        },
+        {
+          Name: "SANGEETA",
+          "Father/Husband Name": "SUNIL",
+          Mobile: 9671035441,
+        },
+        {
+          Name: "RAM PHAL",
+          "Father/Husband Name": "MUAASI RAM",
+          Mobile: 7495005854,
+        },
+        {
+          Name: "POONAM MAKHIJA",
+          "Father/Husband Name": "VISHAL MAKHIJA",
+          Mobile: 9996638526,
+        },
+        {
+          Name: "RISHIPAL",
+          "Father/Husband Name": "PURSHOTAM",
+          Mobile: 9896027851,
+        },
+        {
+          Name: "RITU",
+          "Father/Husband Name": "MALKIYAT SINGH",
+          Mobile: 9729975501,
+        },
+        {
+          Name: "MAHENDER PAL",
+          "Father/Husband Name": "RUHLA RAM",
+          Mobile: 9416193731,
+        },
+        {
+          Name: "SANJEEV KUMAR",
+          "Father/Husband Name": "NANHA RAM",
+          Mobile: 7015242342,
+        },
+        {
+          Name: "SANDEEPA",
+          "Father/Husband Name": "MINTU",
+          Mobile: 9896525417,
+        },
+        {
+          Name: "BALRAM",
+          "Father/Husband Name": "PYARE LAL",
+          Mobile: 8708994593,
+        },
+        {
+          Name: "SAVITA",
+          "Father/Husband Name": "PAWAN",
+          Mobile: 9996912713,
+        },
+        {
+          Name: "BIMLA DEVI",
+          "Father/Husband Name": "SUNIL KUMAR",
+          Mobile: 9817804113,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "MANGA RAM",
+          Mobile: 7700027499,
+        },
+        {
+          Name: "RAJWANTI",
+          "Father/Husband Name": "VIRENDER KUMAR",
+          Mobile: 9671950741,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "DIWAN CHAND",
+          Mobile: 9050464683,
+        },
+        {
+          Name: "KAVITA",
+          "Father/Husband Name": "SANJAY KUMAR",
+          Mobile: 8053182172,
+        },
+        {
+          Name: "SHAYAM LAL",
+          "Father/Husband Name": "AMAR LAL",
+          Mobile: 9991094839,
+        },
+        {
+          Name: "SANTOSH",
+          "Father/Husband Name": "SUNIL KUMAR",
+          Mobile: 9812408633,
+        },
+        {
+          Name: "SHAKUNTLA",
+          "Father/Husband Name": "RAJU",
+          Mobile: 8396993275,
+        },
+        {
+          Name: "PAWAN KUMAR",
+          "Father/Husband Name": "SUKHDYAL",
+          Mobile: 9671660016,
+        },
+        {
+          Name: "REENA RANI",
+          "Father/Husband Name": "VIKRAM",
+          Mobile: 8950061114,
+        },
+        {
+          Name: "ANKIT",
+          "Father/Husband Name": "GURUCHARAN",
+          Mobile: 8295596441,
+        },
+        {
+          Name: "GURPAL SINGH",
+          "Father/Husband Name": "LAL SINGH",
+          Mobile: 9729353330,
+        },
+        {
+          Name: "NAVDEEP KAUR",
+          "Father/Husband Name": "GAGANDEEP",
+          Mobile: 9865989656,
+        },
+        {
+          Name: "VINOD",
+          "Father/Husband Name": "JIJAR SINGH",
+          Mobile: 9896715684,
+        },
+        {
+          Name: "POOJA KAUR",
+          "Father/Husband Name": "AMREEK SINGH",
+          Mobile: 9050610625,
+        },
+        {
+          Name: "RAVI KANT",
+          "Father/Husband Name": "INDER SINGH",
+          Mobile: 9992449142,
+        },
+        {
+          Name: "POOJA",
+          "Father/Husband Name": "DAYAL SINGH",
+          Mobile: 9896577767,
+        },
+        {
+          Name: "NIRMLA KAUR",
+          "Father/Husband Name": "SURAJ SINGH",
+          Mobile: 9817370935,
+        },
+        {
+          Name: "HARBANS",
+          "Father/Husband Name": "RAM SINGH",
+          Mobile: 7015676916,
+        },
+        {
+          Name: "PINKI",
+          "Father/Husband Name": "PARDEEP SINGH",
+          Mobile: 9996334310,
+        },
+        {
+          Name: "BHEEM SINGH",
+          "Father/Husband Name": "KARAM SINGH",
+          Mobile: 7988537465,
+        },
+        {
+          Name: "SONU",
+          "Father/Husband Name": "GURDYAL SINGH",
+          Mobile: 9813342413,
+        },
+        {
+          Name: "RAJENDER KUMAR",
+          "Father/Husband Name": "GAJE SINGH",
+          Mobile: 8708469687,
+        },
+        {
+          Name: "POOJA",
+          "Father/Husband Name": "VIKRAM",
+          Mobile: 8930611535,
+        },
+        {
+          Name: "VEDPAL",
+          "Father/Husband Name": "RAMDHARI SINGH",
+          Mobile: 7206424002,
+        },
+        {
+          Name: "KRISHNA DEVI",
+          "Father/Husband Name": "HAWA SINGH",
+          Mobile: 9050664751,
+        },
+        {
+          Name: "SUNIL DUTT",
+          "Father/Husband Name": "JAIPAL",
+          Mobile: 9050169979,
+        },
+        {
+          Name: "RAKESH KUMAR",
+          "Father/Husband Name": "OM PARKASH",
+          Mobile: 9728634648,
+        },
+        {
+          Name: "MEENAKSHI RANI",
+          "Father/Husband Name": "PAWAN KUMAR",
+          Mobile: 7015025193,
+        },
+        {
+          Name: "URMILA DEVI",
+          "Father/Husband Name": "SURESH KUMAR",
+          Mobile: 9518895630,
+        },
+        {
+          Name: "BALINDER SINGH",
+          "Father/Husband Name": "KRISHAN LAL",
+          Mobile: 9050290625,
+        },
+        {
+          Name: "PINKI DEVI",
+          "Father/Husband Name": "ROHTASH KUMAR",
+          Mobile: 9306000975,
+        },
+        {
+          Name: "DHNNA RAM",
+          "Father/Husband Name": "BALDEWA RAM",
+          Mobile: 8708553562,
+        },
+        {
+          Name: "JOGINDER KUMAR",
+          "Father/Husband Name": "RATI RAM",
+          Mobile: 9991487536,
+        },
+        {
+          Name: "KRISHNA DEVI",
+          "Father/Husband Name": "BALVINDER SINGH",
+          Mobile: 7027113514,
+        },
+        {
+          Name: "INDERJIT",
+          "Father/Husband Name": "RAJINDER",
+          Mobile: 8708117055,
+        },
+        {
+          Name: "POONAM RANI",
+          "Father/Husband Name": "VIRENDER KUMAR",
+          Mobile: 9467010078,
+        },
+        {
+          Name: "SURESH KUMAR",
+          "Father/Husband Name": "MAM CHAND",
+          Mobile: 9350849303,
+        },
+        {
+          Name: "BABLI",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 9991095650,
+        },
+        {
+          Name: "RAMESH KUMAR",
+          "Father/Husband Name": "SOHAN LAL",
+          Mobile: 9813578670,
+        },
+        {
+          Name: "RAJINDER",
+          "Father/Husband Name": "JAI PAL",
+          Mobile: 9050201712,
+        },
+        {
+          Name: "REENA",
+          "Father/Husband Name": "RAVINDER KUMAR",
+          Mobile: 9215120100,
+        },
+        {
+          Name: "JAGDISH CHANDER",
+          "Father/Husband Name": "BHURTU",
+          Mobile: 9467342649,
+        },
+        {
+          Name: "HARSH KUMAR",
+          "Father/Husband Name": "GURU BAKSH LAL",
+          Mobile: 8053388008,
+        },
+        {
+          Name: "MINAKSHI SHARMA",
+          "Father/Husband Name": "SURINDER KUMAR",
+          Mobile: 7355907018,
+        },
+        {
+          Name: "AMIT KUMAR",
+          "Father/Husband Name": "RAJ KUMAR",
+          Mobile: 9050057382,
+        },
+        {
+          Name: "PUSHPA DEVI",
+          "Father/Husband Name": "BAJINDER KUMAR",
+          Mobile: 9813904235,
+        },
+        {
+          Name: "BALJEET KUMAR",
+          "Father/Husband Name": "DHARAM SINGH",
+          Mobile: 9996490334,
+        },
+        {
+          Name: "ANJU RANI",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 9813795215,
+        },
+        {
+          Name: "RAJINDER KUMAR",
+          "Father/Husband Name": "MAHA SINGH",
+          Mobile: 9992357159,
+        },
+        {
+          Name: "SEEMA RANI",
+          "Father/Husband Name": "LALIT KUMAR",
+          Mobile: 9812353039,
+        },
+        {
+          Name: "AJAY MIGLANI",
+          "Father/Husband Name": "MULAKH RAJ",
+          Mobile: 7777074525,
+        },
+        {
+          Name: "ASHA RANI",
+          "Father/Husband Name": "KASHMIRI LAL",
+          Mobile: 8607055657,
+        },
+        {
+          Name: "ANJU BALA",
+          "Father/Husband Name": "RANBIR",
+          Mobile: 9992167456,
+        },
+        {
+          Name: "JITENDER NATH",
+          "Father/Husband Name": "RAJU NATH",
+          Mobile: 9050321130,
+        },
+        {
+          Name: "AMIT KUMAR",
+          "Father/Husband Name": "SATENDER",
+          Mobile: 9812572149,
+        },
+        {
+          Name: "MONIKA",
+          "Father/Husband Name": "KAALA",
+          Mobile: 9817854130,
+        },
+        {
+          Name: "VIKI",
+          "Father/Husband Name": "MEHAR SINGH",
+          Mobile: 9518134693,
+        },
+        {
+          Name: "SONIA CHAUHAN",
+          "Father/Husband Name": "MOTI RAM",
+          Mobile: 7988304587,
+        },
+        {
+          Name: "MANOJ KUMAR",
+          "Father/Husband Name": "HUKAM SINGH",
+          Mobile: 7056391437,
+        },
+        {
+          Name: "DAMINI",
+          "Father/Husband Name": "BABLOO",
+          Mobile: 9518241908,
+        },
+        {
+          Name: "SOM PARKASH",
+          "Father/Husband Name": "NANHA RAM",
+          Mobile: 9817454496,
+        },
+        {
+          Name: "RASHIDA",
+          "Father/Husband Name": "MOHAMAD SADU",
+          Mobile: 9812370520,
+        },
+        {
+          Name: "MEHARBAN",
+          "Father/Husband Name": "ZINDA HASAN",
+          Mobile: 8684840009,
+        },
+        {
+          Name: "BABRI",
+          "Father/Husband Name": "PARVEJ",
+          Mobile: 8059078634,
+        },
+        {
+          Name: "RINKU",
+          "Father/Husband Name": "SHISHPAL",
+          Mobile: 9991022737,
+        },
+        {
+          Name: "RANJU DEVI",
+          "Father/Husband Name": "SURESH KUMAR",
+          Mobile: 9350672740,
+        },
+        {
+          Name: "RENU",
+          "Father/Husband Name": "MANN SINGH",
+          Mobile: 8059666356,
+        },
+        {
+          Name: "INDER KUMAR",
+          "Father/Husband Name": "RAMPAL",
+          Mobile: 8930529436,
+        },
+        {
+          Name: "GEETA RANI",
+          "Father/Husband Name": "RAKESH KUMAR",
+          Mobile: 9896803864,
+        },
+        {
+          Name: "DEEPAK KUMAR",
+          "Father/Husband Name": "JAGDISH",
+          Mobile: 8685864253,
+        },
+        {
+          Name: "CHANDER KANTA",
+          "Father/Husband Name": "RAMSARUP",
+          Mobile: 7015848255,
+        },
+        {
+          Name: "SURJEET",
+          "Father/Husband Name": "SOHAN LAL",
+          Mobile: 8053142622,
+        },
+        {
+          Name: "ANURADHA",
+          "Father/Husband Name": "MANOJ KUMAR",
+          Mobile: 9050030922,
+        },
+        {
+          Name: "RAJU",
+          "Father/Husband Name": "KHAN CHAND",
+          Mobile: 9588516799,
+        },
+        {
+          Name: "SHISHPAL",
+          "Father/Husband Name": "MATHAN SINGH",
+          Mobile: 9812881138,
+        },
+        {
+          Name: "SONIA",
+          "Father/Husband Name": "KRISHAN",
+          Mobile: 9991727744,
+        },
+        {
+          Name: "VISHAL KUMAR",
+          "Father/Husband Name": "SATPAL SINGH",
+          Mobile: 7988639426,
+        },
+        {
+          Name: "JYOTI",
+          "Father/Husband Name": "RAGHUBIR SINGH",
+          Mobile: 8398931696,
+        },
+        {
+          Name: "GOPAL RANA",
+          "Father/Husband Name": "KAMAL RANA",
+          Mobile: 9992906379,
+        },
+        {
+          Name: "RACHNA",
+          "Father/Husband Name": "VIKAS KUMAR",
+          Mobile: 9729714694,
+        },
+        {
+          Name: "MANJU RANI",
+          "Father/Husband Name": "MUKESH KUMAR",
+          Mobile: 9991279093,
+        },
+        {
+          Name: "SURENDER KUMAR",
+          "Father/Husband Name": "BALERAM",
+          Mobile: 9896111608,
+        },
+        {
+          Name: "BALRAJ KUMAR",
+          "Father/Husband Name": "RAM KUMAR",
+          Mobile: 9896134857,
+        },
+        {
+          Name: "AARTI",
+          "Father/Husband Name": "SATISH KUMAR",
+          Mobile: 8851210006,
+        },
+        {
+          Name: "SALIM",
+          "Father/Husband Name": "SHAMSUDIN",
+          Mobile: 9728832732,
+        },
+        {
+          Name: "KOMAL RANI",
+          "Father/Husband Name": "AMIT DAHIYA",
+          Mobile: 8053626163,
+        },
+        {
+          Name: "SANJEEV DAHIYA",
+          "Father/Husband Name": "PALA RAM",
+          Mobile: 9050863575,
+        },
+        {
+          Name: "POOJA RANI",
+          "Father/Husband Name": "RAVI SHARMA",
+          Mobile: 9896603330,
+        },
+        {
+          Name: "REKHA RANI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 8684014213,
+        },
+        {
+          Name: "RAJBIR SINGH",
+          "Father/Husband Name": "PURAN CHAND",
+          Mobile: 9306958380,
+        },
+        {
+          Name: "RAJESH KUMAR",
+          "Father/Husband Name": "DEEP CHAND",
+          Mobile: 8816818030,
+        },
+        {
+          Name: "MONIKA",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 9050464746,
+        },
+        {
+          Name: "JASMER",
+          "Father/Husband Name": "OM PARKASH",
+          Mobile: 7071489000,
+        },
+        {
+          Name: "RUBY",
+          "Father/Husband Name": "SANDEEP",
+          Mobile: 7401999988,
+        },
+        {
+          Name: "SUNIL",
+          "Father/Husband Name": "RAM SINGH",
+          Mobile: 9050055905,
+        },
+        {
+          Name: "ANJU",
+          "Father/Husband Name": "KAPIL",
+          Mobile: 8814856318,
+        },
+        {
+          Name: "KULDEEP TYAGI",
+          "Father/Husband Name": "SATBIR TYAGI",
+          Mobile: 8950725051,
+        },
+        {
+          Name: "SANYOGITA DEVI",
+          "Father/Husband Name": "SURENDER KUMAR",
+          Mobile: 9817776452,
+        },
+        {
+          Name: "SONU",
+          "Father/Husband Name": "BALBIR SINGH",
+          Mobile: 9050998011,
+        },
+        {
+          Name: "ANJU DEVI",
+          "Father/Husband Name": "AMIT KUMAR",
+          Mobile: 8053420127,
+        },
+        {
+          Name: "SIKANDER KUMAR",
+          "Father/Husband Name": "DALBIR SINGH",
+          Mobile: 8708630855,
+        },
+        {
+          Name: "RITU",
+          "Father/Husband Name": "LAKSHMAN",
+          Mobile: 9813455162,
+        },
+        {
+          Name: "SEEMA DEVI",
+          "Father/Husband Name": "SALINDER",
+          Mobile: 9050718799,
+        },
+        {
+          Name: "SUNIL NEHRA",
+          "Father/Husband Name": "MEHAR SINGH",
+          Mobile: 9992399930,
+        },
+        {
+          Name: "ANU",
+          "Father/Husband Name": "KULDEEP SINGH",
+          Mobile: 9416858479,
+        },
+        {
+          Name: "JASBIR SINGH",
+          "Father/Husband Name": "RAM SARUP",
+          Mobile: 9416029900,
+        },
+        {
+          Name: "RANI DEVI",
+          "Father/Husband Name": "SUKHBIR",
+          Mobile: 9812566389,
+        },
+        {
+          Name: "ARVIND",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 9813717214,
+        },
+        {
+          Name: "SAGAR",
+          "Father/Husband Name": "ROHTASH",
+          Mobile: 8053397391,
+        },
+        {
+          Name: "ANKUSH DEVI",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 8053454367,
+        },
+        {
+          Name: "PINKI",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 9991871916,
+        },
+        {
+          Name: "AJAY KUMAR",
+          "Father/Husband Name": "RAMESH KUMAR",
+          Mobile: 8221994064,
+        },
+        {
+          Name: "GAURAV",
+          "Father/Husband Name": "SATPAL",
+          Mobile: 6239967445,
+        },
+        {
+          Name: "SONIA",
+          "Father/Husband Name": "SURJEET",
+          Mobile: 8053444175,
+        },
+        {
+          Name: "GULSHAN",
+          "Father/Husband Name": "SHOKAT ALI",
+          Mobile: 9625010776,
+        },
+        {
+          Name: "PARMOD KUMAR",
+          "Father/Husband Name": "RAM CHANDER",
+          Mobile: 8168545441,
+        },
+        {
+          Name: "SONIYA",
+          "Father/Husband Name": "VIKAS KUMAR",
+          Mobile: 9813854297,
+        },
+        {
+          Name: "JITENDER SINGH",
+          "Father/Husband Name": "BHIM SINGH",
+          Mobile: 9813438238,
+        },
+        {
+          Name: "JYOTI SHARMA",
+          "Father/Husband Name": "VIKAS",
+          Mobile: 9991625061,
+        },
+        {
+          Name: "KARAN SINGH",
+          "Father/Husband Name": "KAHAN SINGH",
+          Mobile: 8684960772,
+        },
+        {
+          Name: "PARVEEN KUMAR",
+          "Father/Husband Name": "LAXMAN SINGH",
+          Mobile: 9991215643,
+        },
+        {
+          Name: "KHANWAR BHAN",
+          "Father/Husband Name": "BHIM SINGH",
+          Mobile: 7900055130,
+        },
+        {
+          Name: "KAVITA",
+          "Father/Husband Name": "SURESH KUMAR",
+          Mobile: 8222017220,
+        },
+        {
+          Name: "SONU KUMAR",
+          "Father/Husband Name": "DEVI SINGH",
+          Mobile: 9466389138,
+        },
+        {
+          Name: "VIKAS",
+          "Father/Husband Name": "RAJINDER KUMAR",
+          Mobile: 8572008362,
+        },
+        {
+          Name: "PREM LATA",
+          "Father/Husband Name": "RAJBIR SINGH",
+          Mobile: 8295771984,
+        },
+        {
+          Name: "KRISHAN",
+          "Father/Husband Name": "BABU RAM SHARMA",
+          Mobile: 9812738385,
+        },
+        {
+          Name: "JYOTI DEVI",
+          "Father/Husband Name": "AMIT KUMAR",
+          Mobile: 8295039595,
+        },
+        {
+          Name: "ANUJ MOKAL",
+          "Father/Husband Name": "BAL SINGH",
+          Mobile: 9729761085,
+        },
+        {
+          Name: "SATISH KUMAR",
+          "Father/Husband Name": "SUMER SINGH",
+          Mobile: 9215280050,
+        },
+        {
+          Name: "PRIYANKA SHARMA",
+          "Father/Husband Name": "LALIT KUMAR",
+          Mobile: 9467048338,
+        },
+        {
+          Name: "DHARAMVEER",
+          "Father/Husband Name": "RAM KUMAR",
+          Mobile: 8930248557,
+        },
+        {
+          Name: "NISHA RANI",
+          "Father/Husband Name": "PAWAN KUMAR",
+          Mobile: 9050054267,
+        },
+        {
+          Name: "ANIL KUMAR",
+          "Father/Husband Name": "DHARM PAL",
+          Mobile: 9813766528,
+        },
+        {
+          Name: "KANTA DEVI",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 9812166199,
+        },
+        {
+          Name: "RAVI KUMAR",
+          "Father/Husband Name": "RAJBIR SINGH",
+          Mobile: 7027707771,
+        },
+        {
+          Name: "MAMTA RANI",
+          "Father/Husband Name": "VIKI KUMAR",
+          Mobile: 9671511740,
+        },
+        {
+          Name: "MUNISH KUMAR",
+          "Father/Husband Name": "PREM SINGH",
+          Mobile: 8307725955,
+        },
+        {
+          Name: "PREETI DEVI",
+          "Father/Husband Name": "PURAN SINGH BHARGAV",
+          Mobile: 8053112249,
+        },
+        {
+          Name: "SATPAL",
+          "Father/Husband Name": "RAM SINGH",
+          Mobile: 9034850905,
+        },
+        {
+          Name: "ANKUSH RANI",
+          "Father/Husband Name": "SATISH KUMAR",
+          Mobile: 9896200657,
+        },
+        {
+          Name: "SONU",
+          "Father/Husband Name": "KRISHAN KUMAR",
+          Mobile: 7206519539,
+        },
+        {
+          Name: "MADHU BALA",
+          "Father/Husband Name": "MOHAN LAL",
+          Mobile: 9813752686,
+        },
+        {
+          Name: "SANJAY KUMAR",
+          "Father/Husband Name": "JAGDISH CHAND",
+          Mobile: 9671715959,
+        },
+        {
+          Name: "SUMAN DEVI",
+          "Father/Husband Name": "NARESH KUMAR",
+          Mobile: 9896290046,
+        },
+        {
+          Name: "OM PARKASH",
+          "Father/Husband Name": "MANSA RAM",
+          Mobile: 9312856883,
+        },
+        {
+          Name: "VANITA",
+          "Father/Husband Name": "ASHOK KUMAR",
+          Mobile: 8708513756,
+        },
+        {
+          Name: "RAMESH KUMAR",
+          "Father/Husband Name": "RAM KUMAR",
+          Mobile: 8571096504,
+        },
+        {
+          Name: "REKHA RANI",
+          "Father/Husband Name": "MUKESH KUMAR",
+          Mobile: 8684864208,
+        },
+        {
+          Name: "UPENDER KUMAR",
+          "Father/Husband Name": "NAKLI SINGH",
+          Mobile: 8295158155,
+        },
+        {
+          Name: "SOMA RANI",
+          "Father/Husband Name": "SHISHPAL",
+          Mobile: 9050537462,
+        },
+        {
+          Name: "KARAMPAL",
+          "Father/Husband Name": "SOMDUTT",
+          Mobile: 9812370978,
+        },
+        {
+          Name: "SAROJ",
+          "Father/Husband Name": "UTTAM SINGH",
+          Mobile: 9996636229,
+        },
+        {
+          Name: "RAJINDER KUMAR",
+          "Father/Husband Name": "PURAN CHAND",
+          Mobile: 9996188540,
+        },
+        {
+          Name: "ANJANA DEVI",
+          "Father/Husband Name": "MONU",
+          Mobile: 9896174694,
+        },
+        {
+          Name: "SURENDER",
+          "Father/Husband Name": "MOHANLAL",
+          Mobile: 9896274180,
+        },
+        {
+          Name: "SUMAN RANI",
+          "Father/Husband Name": "RAJBIR SINGH",
+          Mobile: 9896912628,
+        },
+        {
+          Name: "SURENDER",
+          "Father/Husband Name": "MAKKAR SINGH",
+          Mobile: 9467684553,
+        },
+        {
+          Name: "SONAM KUMARI",
+          "Father/Husband Name": "DHARAMBIR",
+          Mobile: 8585983630,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "AJMER SINGH",
+          Mobile: 9996969857,
+        },
+        {
+          Name: "JITENDER KUMAR",
+          "Father/Husband Name": "RAMESH",
+          Mobile: 9068996516,
+        },
+        {
+          Name: "ANJU",
+          "Father/Husband Name": "MUKESH",
+          Mobile: 8607478178,
+        },
+        {
+          Name: "JOGINDER",
+          "Father/Husband Name": "SHER SINGH",
+          Mobile: 9812490850,
+        },
+        {
+          Name: "SUNIL KUMAR",
+          "Father/Husband Name": "PREM SINGH",
+          Mobile: 9728488720,
+        },
+        {
+          Name: "PRIYANKA CHAURASIYA",
+          "Father/Husband Name": "RAMPAL",
+          Mobile: 9053735127,
+        },
+        {
+          Name: "AMIT",
+          "Father/Husband Name": "KRISHAN LAL",
+          Mobile: 9467044098,
+        },
+        {
+          Name: "SHILPA",
+          "Father/Husband Name": "YOGESH KUMAR",
+          Mobile: 9729654090,
+        },
+        {
+          Name: "SATISH KUMAR",
+          "Father/Husband Name": "KASHMIRI LAL",
+          Mobile: 8059022109,
+        },
+        {
+          Name: "RAVINA DEVI",
+          "Father/Husband Name": "SANDEEP",
+          Mobile: 9728001270,
+        },
+        {
+          Name: "MAHABIR",
+          "Father/Husband Name": "KALI RAM",
+          Mobile: 9812513649,
+        },
+        {
+          Name: "ANKIT",
+          "Father/Husband Name": "SHERPAL SINGH",
+          Mobile: 9729716816,
+        },
+        {
+          Name: "NIRMAL DEVI",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 9996570222,
+        },
+        {
+          Name: "JASBIR",
+          "Father/Husband Name": "TUGGA RAM",
+          Mobile: 9996148118,
+        },
+        {
+          Name: "RESHMA",
+          "Father/Husband Name": "TEJPAL",
+          Mobile: 8570912877,
+        },
+        {
+          Name: "RAJBIR",
+          "Father/Husband Name": "CHIMAN",
+          Mobile: 9813100374,
+        },
+        {
+          Name: "BABITA DEVI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 9896966225,
+        },
+        {
+          Name: "SONU KUMAR",
+          "Father/Husband Name": "PALA RAM",
+          Mobile: 8529796442,
+        },
+        {
+          Name: "NEHA",
+          "Father/Husband Name": "AJAY",
+          Mobile: 9996930058,
+        },
+        {
+          Name: "NEERAJ KUMAR",
+          "Father/Husband Name": "SURENDER PAL",
+          Mobile: 9896370281,
+        },
+        {
+          Name: "MANJU BALA",
+          "Father/Husband Name": "JAIBIR",
+          Mobile: 8607897509,
+        },
+        {
+          Name: "CHANDER SHEKHAR",
+          "Father/Husband Name": "NARESH SINGH",
+          Mobile: 9050751457,
+        },
+        {
+          Name: "SUDESH RANI",
+          "Father/Husband Name": "PANKAJ KUMAR",
+          Mobile: 9996666831,
+        },
+        {
+          Name: "RAVINDER KUMAR",
+          "Father/Husband Name": "PREM SINGH",
+          Mobile: 9729731637,
+        },
+        {
+          Name: "AMIT KUMAR",
+          "Father/Husband Name": "LAL CHAND",
+          Mobile: 8059640008,
+        },
+        {
+          Name: "RAMAN",
+          "Father/Husband Name": "SANDEEP KUMAR",
+          Mobile: 9034275104,
+        },
+        {
+          Name: "NAKKAL",
+          "Father/Husband Name": "SADHU SINGH",
+          Mobile: 8295602428,
+        },
+        {
+          Name: "ARTI",
+          "Father/Husband Name": "RAHUL",
+          Mobile: 9996391291,
+        },
+        {
+          Name: "SUMIT",
+          "Father/Husband Name": "BRIJESH",
+          Mobile: 8396821959,
+        },
+        {
+          Name: "SUDAM",
+          "Father/Husband Name": "MANJUR AHMAD",
+          Mobile: 9518623976,
+        },
+        {
+          Name: "ARUN KUMAR",
+          "Father/Husband Name": "OMPARKASH",
+          Mobile: 9812292694,
+        },
+        {
+          Name: "REENA RANI",
+          "Father/Husband Name": "RAKESH KUMAR",
+          Mobile: 9728698838,
+        },
+        {
+          Name: "SURAJ BHAN",
+          "Father/Husband Name": "SUDHAN",
+          Mobile: 9050282416,
+        },
+        {
+          Name: "MEENA RANI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 9466450307,
+        },
+        {
+          Name: "JAGBIR SINGH",
+          "Father/Husband Name": "MAHENDER SINGH",
+          Mobile: 8059267070,
+        },
+        {
+          Name: "SONIYA",
+          "Father/Husband Name": "SATISH KUMAR",
+          Mobile: 9991300233,
+        },
+        {
+          Name: "ASHU",
+          "Father/Husband Name": "ASHOK KUMAR",
+          Mobile: 9729711162,
+        },
+        {
+          Name: "REENA DEVI",
+          "Father/Husband Name": "NEERAJ",
+          Mobile: 9991892015,
+        },
+        {
+          Name: "DEEPAK KUMAR",
+          "Father/Husband Name": "ANGRAJ SINGH",
+          Mobile: 8571004646,
+        },
+        {
+          Name: "KUSUM",
+          "Father/Husband Name": "SUNNY",
+          Mobile: 8950008710,
+        },
+        {
+          Name: "KAJAL",
+          "Father/Husband Name": "HIMANSHU",
+          Mobile: 9466547943,
+        },
+        {
+          Name: "ANKUSH",
+          "Father/Husband Name": "SHRI RAM",
+          Mobile: 9896236465,
+        },
+        {
+          Name: "PREETI RANI",
+          "Father/Husband Name": "SANJAY",
+          Mobile: 9812163431,
+        },
+        {
+          Name: "VIJAY RAWAL",
+          "Father/Husband Name": "JARASAN RAWAL",
+          Mobile: 9518126982,
+        },
+        {
+          Name: "MUKESH",
+          "Father/Husband Name": "JAGDISH",
+          Mobile: 8684851613,
+        },
+        {
+          Name: "RENU BALA",
+          "Father/Husband Name": "DEVENDER KUMAR",
+          Mobile: 8307880717,
+        },
+        {
+          Name: "AJAY SINGH",
+          "Father/Husband Name": "CHANDER BHAN",
+          Mobile: 7404550007,
+        },
+        {
+          Name: "RENU DEVI",
+          "Father/Husband Name": "JEET KUMAR",
+          Mobile: 8398820540,
+        },
+        {
+          Name: "ANKIT KUMAR",
+          "Father/Husband Name": "RANDHIR",
+          Mobile: 8818070041,
+        },
+        {
+          Name: "RAJBIR SINGH",
+          "Father/Husband Name": "DAYANAND",
+          Mobile: 8397004665,
+        },
+        {
+          Name: "MANISHA",
+          "Father/Husband Name": "SONU",
+          Mobile: 9169000006,
+        },
+        {
+          Name: "MALKHAN CHOUDHARY",
+          "Father/Husband Name": "INDER SINGH",
+          Mobile: 9996721307,
+        },
+        {
+          Name: "SINA",
+          "Father/Husband Name": "VIJAY KUMAR",
+          Mobile: 9896179532,
+        },
+        {
+          Name: "VIJAY KUMAR",
+          "Father/Husband Name": "SURESH KUMAR",
+          Mobile: 9729305511,
+        },
+        {
+          Name: "UMA RANI",
+          "Father/Husband Name": "SUNIL",
+          Mobile: 9050381001,
+        },
+        {
+          Name: "MOHAN LAL",
+          "Father/Husband Name": "DHANPAT SINGH",
+          Mobile: 9996192831,
+        },
+        {
+          Name: "KRISHNA",
+          "Father/Husband Name": "JAGVEER",
+          Mobile: 9991231308,
+        },
+        {
+          Name: "SUMIT",
+          "Father/Husband Name": "DHARMPAL SINGH",
+          Mobile: 8529170057,
+        },
+        {
+          Name: "MAHABIR SINGH",
+          "Father/Husband Name": "NATHU RAM",
+          Mobile: 8800230605,
+        },
+        {
+          Name: "MONIKA",
+          "Father/Husband Name": "MUKESH CHAUHAN",
+          Mobile: 9896041004,
+        },
+        {
+          Name: "SATYWAN",
+          "Father/Husband Name": "JAIPAL SINGH",
+          Mobile: 9996247034,
+        },
+        {
+          Name: "NIRMALA DEVI",
+          "Father/Husband Name": "JASMER",
+          Mobile: 9050788703,
+        },
+        {
+          Name: "RAJESH",
+          "Father/Husband Name": "HARI RAM",
+          Mobile: 9306577698,
+        },
+        {
+          Name: "RACHNA",
+          "Father/Husband Name": "ANAND GUPTA",
+          Mobile: 9896700563,
+        },
+        {
+          Name: "RAMESH KUMAR",
+          "Father/Husband Name": "JILA SINGH",
+          Mobile: 9050662412,
+        },
+        {
+          Name: "RITU",
+          "Father/Husband Name": "VINOD",
+          Mobile: 9467029990,
+        },
+        {
+          Name: "RAM CHANDER",
+          "Father/Husband Name": "HUKAM CHAND",
+          Mobile: 9034189275,
+        },
+        {
+          Name: "ANJU",
+          "Father/Husband Name": "RAJU",
+          Mobile: 9996940700,
+        },
+        {
+          Name: "JOGINDER SINGH",
+          "Father/Husband Name": "BIR SINGH",
+          Mobile: 9996773881,
+        },
+        {
+          Name: "VIKASH RAWAL",
+          "Father/Husband Name": "PALE RAM",
+          Mobile: 7015022575,
+        },
+        {
+          Name: "ANNU RANI",
+          "Father/Husband Name": "AMIT",
+          Mobile: 9467126600,
+        },
+        {
+          Name: "KULDEEP SINGH",
+          "Father/Husband Name": "RAMESH CHAND",
+          Mobile: 9306737411,
+        },
+        {
+          Name: "POONAM DEVI",
+          "Father/Husband Name": "MANOJ",
+          Mobile: 9991232700,
+        },
+        {
+          Name: "RAKESH KUMAR",
+          "Father/Husband Name": "SAHAB SINGH",
+          Mobile: 9996057095,
+        },
+        {
+          Name: "SUNITA",
+          "Father/Husband Name": "SANJEEV KUMAR",
+          Mobile: 9813038512,
+        },
+        {
+          Name: "MONU",
+          "Father/Husband Name": "SURENDER",
+          Mobile: 8708238863,
+        },
+        {
+          Name: "SUNDER DEVI",
+          "Father/Husband Name": "SUBHASH",
+          Mobile: 8930605000,
+        },
+        {
+          Name: "SUNITA DEVI",
+          "Father/Husband Name": "ARVIND KUMAR",
+          Mobile: 9812588094,
+        },
+        {
+          Name: "RAJEEV KUMAR",
+          "Father/Husband Name": "RAMKUMAR",
+          Mobile: 9306318459,
+        },
+        {
+          Name: "JAGTAR SINGH",
+          "Father/Husband Name": "KASHMIR SINGH",
+          Mobile: 9812746720,
+        },
+        {
+          Name: "DAVINDER KAUR",
+          "Father/Husband Name": "BALJEET SINGH",
+          Mobile: 9728634370,
+        },
+        {
+          Name: "ROHTASH KUMAR",
+          "Father/Husband Name": "RANDHIR SINGH",
+          Mobile: 9050050458,
+        },
+        {
+          Name: "KAVITA DEVI",
+          "Father/Husband Name": "KAMAL SINGH",
+          Mobile: 9812659321,
+        },
+        {
+          Name: "NARESH KUMAR",
+          "Father/Husband Name": "SATPAL SINGH",
+          Mobile: 9255527610,
+        },
+        {
+          Name: "DARSHNA",
+          "Father/Husband Name": "NARESH",
+          Mobile: 9588108113,
+        },
+        {
+          Name: "BAHADUR SINGH",
+          "Father/Husband Name": "KULDEEP SINGH",
+          Mobile: 7015231117,
+        },
+        {
+          Name: "USHA",
+          "Father/Husband Name": "MANJEET",
+          Mobile: 8168143338,
+        },
+        {
+          Name: "ANIL KUMAR",
+          "Father/Husband Name": "OMPARKASH",
+          Mobile: 8930675628,
+        },
+        {
+          Name: "KAVITA RANI",
+          "Father/Husband Name": "SANJAY KUMAR",
+          Mobile: 9813333896,
+        },
+        {
+          Name: "RAMESH CHAND",
+          "Father/Husband Name": "BHAGWAN DASS",
+          Mobile: 9991447428,
+        },
+        {
+          Name: "RAKHI",
+          "Father/Husband Name": "GOPAL",
+          Mobile: 7015021263,
+        },
+        {
+          Name: "NISHAN SINGH",
+          "Father/Husband Name": "NIHAL CHAND",
+          Mobile: 9817360206,
+        },
+        {
+          Name: "SURAJ",
+          "Father/Husband Name": "RAMESH KUMAR",
+          Mobile: 8396908105,
+        },
+        {
+          Name: "SHARVAN",
+          "Father/Husband Name": "SATPAL",
+          Mobile: 9050654589,
+        },
+        {
+          Name: "PINKI DEVI",
+          "Father/Husband Name": "PAWAN KUMAR",
+          Mobile: 9813554125,
+        },
+        {
+          Name: "SUMIT KUMAR",
+          "Father/Husband Name": "BARU RAM",
+          Mobile: 9991184409,
+        },
+        {
+          Name: "PINKI",
+          "Father/Husband Name": "SHIV KUMAR",
+          Mobile: 9991040909,
+        },
+        {
+          Name: "RAJPAL",
+          "Father/Husband Name": "BALWANT SINGH",
+          Mobile: 9992417251,
+        },
+        {
+          Name: "REENA DEVI",
+          "Father/Husband Name": "VIKRAM SINGH",
+          Mobile: 8950347561,
+        },
+        {
+          Name: "GURMESH",
+          "Father/Husband Name": "RATI RAM",
+          Mobile: 9728057776,
+        },
+        {
+          Name: "GURJANT SINGH",
+          "Father/Husband Name": "PARAMJEET SINGH",
+          Mobile: 9996138432,
+        },
+        {
+          Name: "POONAM RANI",
+          "Father/Husband Name": "SANJAY KUMAR",
+          Mobile: 9671751329,
+        },
+        {
+          Name: "PARBHAT KUMAR",
+          "Father/Husband Name": "KARAN SINGH",
+          Mobile: 8901005505,
+        },
+        {
+          Name: "AEHSAN",
+          "Father/Husband Name": "ALIYASH",
+          Mobile: 9817677987,
+        },
+        {
+          Name: "NAJMA",
+          "Father/Husband Name": "UMAR DEEN",
+          Mobile: 9671958324,
+        },
+        {
+          Name: "MUBARIK",
+          "Father/Husband Name": "HASIM ALI",
+          Mobile: 9996126528,
+        },
+        {
+          Name: "RAJESH KUMAR",
+          "Father/Husband Name": "DHARAMPAL",
+          Mobile: 9813546835,
+        },
+        {
+          Name: "SITARA",
+          "Father/Husband Name": "TASUVAR",
+          Mobile: 9991322564,
+        },
+        {
+          Name: "KULDEEP",
+          "Father/Husband Name": "MAN SINGH",
+          Mobile: 9416097854,
+        },
+        {
+          Name: "SEEMA",
+          "Father/Husband Name": "IRSHAD ALI",
+          Mobile: 9813542786,
+        },
+        {
+          Name: "SAMEEM",
+          "Father/Husband Name": "JARIF",
+          Mobile: 9050727855,
+        },
+        {
+          Name: "SHAHRUKH",
+          "Father/Husband Name": "AYUB ALI",
+          Mobile: 9991321967,
+        },
+        {
+          Name: "KULDEEP SINGH",
+          "Father/Husband Name": "OM PARKASH",
+          Mobile: 9996320030,
+        },
+        {
+          Name: "DHARAMBIR",
+          "Father/Husband Name": "ARJUN SINGH",
+          Mobile: 8813871678,
+        },
+        {
+          Name: "SUNITA DEVI",
+          "Father/Husband Name": "MUKESH KUMAR",
+          Mobile: 9991413269,
+        },
+        {
+          Name: "VIDYA BHUSHAN",
+          "Father/Husband Name": "MADAN LAL",
+          Mobile: 9050464346,
+        },
+        {
+          Name: "REKHA DEVI",
+          "Father/Husband Name": "RAJ KUMAR",
+          Mobile: 8307456046,
+        },
+        {
+          Name: "RANBIR SINGH",
+          "Father/Husband Name": "GULAB SINGH",
+          Mobile: 9896298154,
+        },
+        {
+          Name: "SUMAN",
+          "Father/Husband Name": "AMIT SHARMA",
+          Mobile: 9991976002,
+        },
+        {
+          Name: "POOJA DEVI",
+          "Father/Husband Name": "SANDEEP",
+          Mobile: 8053537441,
+        },
+        {
+          Name: "RAJPAL",
+          "Father/Husband Name": "SHIV NATH",
+          Mobile: 9350629283,
+        },
+        {
+          Name: "SUMAN DEVI",
+          "Father/Husband Name": "SANDEEP KUMAR",
+          Mobile: 9518810032,
+        },
+        {
+          Name: "SATBIR",
+          "Father/Husband Name": "HAWA SINGH",
+          Mobile: 9053202597,
+        },
+        {
+          Name: "REENA",
+          "Father/Husband Name": "VIKRAM",
+          Mobile: 9518483792,
+        },
+        {
+          Name: "RAVINDER",
+          "Father/Husband Name": "RAMPHAL",
+          Mobile: 8684004330,
+        },
+        {
+          Name: "INDU",
+          "Father/Husband Name": "PRADEEP",
+          Mobile: 8053586881,
+        },
+        {
+          Name: "SANDEEP",
+          "Father/Husband Name": "JOGINDER",
+          Mobile: 9050699388,
+        },
+        {
+          Name: "POOJA",
+          "Father/Husband Name": "CHOTU",
+          Mobile: 8813101008,
+        },
+        {
+          Name: "SHIV DUTT",
+          "Father/Husband Name": "ISHWAR SINGH",
+          Mobile: 7027886523,
+        },
+        {
+          Name: "MEENU RANI",
+          "Father/Husband Name": "LALIT KUMAR",
+          Mobile: 7053187143,
+        },
+        {
+          Name: "SUMAN",
+          "Father/Husband Name": "MANNU",
+          Mobile: 7027170982,
+        },
+        {
+          Name: "PARVESH KUMAR",
+          "Father/Husband Name": "SHAMSHER SINGH",
+          Mobile: 9466562190,
+        },
+        {
+          Name: "RAJNI DEVI",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 9354444450,
+        },
+        {
+          Name: "SUNIL SAINI",
+          "Father/Husband Name": "MOHAN LAL",
+          Mobile: 8685893001,
+        },
+        {
+          Name: "KRISHNA DEVI",
+          "Father/Husband Name": "JASBIR",
+          Mobile: 9812017321,
+        },
+        {
+          Name: "NAWAB",
+          "Father/Husband Name": "PHATE SINGH",
+          Mobile: 8813883807,
+        },
+        {
+          Name: "KAVITA",
+          "Father/Husband Name": "SUSHIL PANNU",
+          Mobile: 8607757797,
+        },
+        {
+          Name: "ASHOK KUMAR",
+          "Father/Husband Name": "BALWAN SINGH",
+          Mobile: 8607502512,
+        },
+        {
+          Name: "PAWAN KUMAR",
+          "Father/Husband Name": "JAINARYAN",
+          Mobile: 9467276385,
+        },
+        {
+          Name: "SUMAN",
+          "Father/Husband Name": "AMIT KUMAR",
+          Mobile: 8053270005,
+        },
+        {
+          Name: "KULDEEP",
+          "Father/Husband Name": "RANDHIR SINGH",
+          Mobile: 9813648192,
+        },
+        {
+          Name: "REENA DEVI",
+          "Father/Husband Name": "AMANDEEP",
+          Mobile: 9671814626,
+        },
+        {
+          Name: "NIRMLA DEVI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 9729180118,
+        },
+        {
+          Name: "RAVINDER PAANU",
+          "Father/Husband Name": "SUBHASH CHAND",
+          Mobile: 9813206366,
+        },
+        {
+          Name: "SURINDER PAL SINGH",
+          "Father/Husband Name": "SANPURAN SINGH",
+          Mobile: 9416363098,
+        },
+        {
+          Name: "MANOJ KUMAR",
+          "Father/Husband Name": "JOGINDER SINGH",
+          Mobile: 8930679125,
+        },
+        {
+          Name: "PRKASH KAUR",
+          "Father/Husband Name": "KOMAL",
+          Mobile: 8930285693,
+        },
+        {
+          Name: "SUNNY",
+          "Father/Husband Name": "LAMBER SINGH",
+          Mobile: 8168201220,
+        },
+        {
+          Name: "NEETU",
+          "Father/Husband Name": "LAKHAN SINGH",
+          Mobile: 8053483429,
+        },
+        {
+          Name: "NOOPAN SINGH",
+          "Father/Husband Name": "DARSAN SINGH",
+          Mobile: 8816039176,
+        },
+        {
+          Name: "NAMARTA RANI",
+          "Father/Husband Name": "BHAGWAN SINGH",
+          Mobile: 9813589331,
+        },
+        {
+          Name: "VIKRAM",
+          "Father/Husband Name": "JARNAIL",
+          Mobile: 8307153700,
+        },
+        {
+          Name: "ARJUN KAUR",
+          "Father/Husband Name": "JASBIR",
+          Mobile: 8689019443,
+        },
+        {
+          Name: "KULDEEP",
+          "Father/Husband Name": "RAJU",
+          Mobile: 9306699317,
+        },
+        {
+          Name: "RAJNI KAUR",
+          "Father/Husband Name": "BITTU SINGH",
+          Mobile: 9306166719,
+        },
+        {
+          Name: "PARAMJEET",
+          "Father/Husband Name": "BALBIR SINGH",
+          Mobile: 9671813047,
+        },
+        {
+          Name: "SURESH KUMAR",
+          "Father/Husband Name": "SITA RAM",
+          Mobile: 9050028754,
+        },
+        {
+          Name: "KOMAL",
+          "Father/Husband Name": "DEVANDER",
+          Mobile: 7015354391,
+        },
+        {
+          Name: "HOI RAM",
+          "Father/Husband Name": "PALA RAM",
+          Mobile: 8059793204,
+        },
+        {
+          Name: "MINAKSHI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 9050424209,
+        },
+        {
+          Name: "MUKESH KUMAR",
+          "Father/Husband Name": "SUBHASH CHAND",
+          Mobile: 9992843684,
+        },
+        {
+          Name: "YASH RANI",
+          "Father/Husband Name": "BHIM SAIN",
+          Mobile: 9050929801,
+        },
+        {
+          Name: "VIKAS SHARMA",
+          "Father/Husband Name": "BALBIR SINGH",
+          Mobile: 8059917279,
+        },
+        {
+          Name: "SUDESH",
+          "Father/Husband Name": "DHARAM SINGH",
+          Mobile: 9812408642,
+        },
+        {
+          Name: "SUSHIL",
+          "Father/Husband Name": "DALA RAM",
+          Mobile: 9518200787,
+        },
+        {
+          Name: "KALPNA",
+          "Father/Husband Name": "PARDEEP TYAGI",
+          Mobile: 9728101303,
+        },
+        {
+          Name: "TUSHAR",
+          "Father/Husband Name": "SATISH TYAGI",
+          Mobile: 8607302500,
+        },
+        {
+          Name: "CHINKI",
+          "Father/Husband Name": "PARDEEP KUMAR",
+          Mobile: 9050047325,
+        },
+        {
+          Name: "BALRAM",
+          "Father/Husband Name": "PURAN SINGH",
+          Mobile: 9992728188,
+        },
+        {
+          Name: "PREETI",
+          "Father/Husband Name": "DEEPAK",
+          Mobile: 9671334723,
+        },
+        {
+          Name: "JAGAT SINGH",
+          "Father/Husband Name": "RATTAN SINGH",
+          Mobile: 9671542800,
+        },
+        {
+          Name: "NEELAM",
+          "Father/Husband Name": "MUKESH KUMAR",
+          Mobile: 7027874657,
+        },
+        {
+          Name: "KURBAN",
+          "Father/Husband Name": "SALIMU",
+          Mobile: 9813454600,
+        },
+        {
+          Name: "SONIA DEVI",
+          "Father/Husband Name": "PARVEEN KUMAR",
+          Mobile: 9050939339,
+        },
+        {
+          Name: "CHANDER PAL",
+          "Father/Husband Name": "KARAM VEER",
+          Mobile: 9813578592,
+        },
+        {
+          Name: "SUSHEELA",
+          "Father/Husband Name": "NARENDRA",
+          Mobile: 9813616483,
+        },
+        {
+          Name: "NISHA DEVI",
+          "Father/Husband Name": "SURENDER KUMAR",
+          Mobile: 8307514488,
+        },
+        {
+          Name: "DUSHYANT",
+          "Father/Husband Name": "RAMNIWAS",
+          Mobile: 9812380651,
+        },
+        {
+          Name: "RITU",
+          "Father/Husband Name": "SUKHVINDER SINGH",
+          Mobile: 9050464128,
+        },
+        {
+          Name: "PRITAM SINGH",
+          "Father/Husband Name": "ROHTASH",
+          Mobile: 7494929168,
+        },
+        {
+          Name: "MONIKA",
+          "Father/Husband Name": "RISHI PAL",
+          Mobile: 9991487555,
+        },
+        {
+          Name: "SOMPAL",
+          "Father/Husband Name": "MEHAR SINGH",
+          Mobile: 9991904199,
+        },
+        {
+          Name: "POOJA",
+          "Father/Husband Name": "LAKHVINDER SINGH",
+          Mobile: 9896454038,
+        },
+        {
+          Name: "ASHOK KUMAR",
+          "Father/Husband Name": "SHAMSHER",
+          Mobile: 9541794453,
+        },
+        {
+          Name: "RAJANI",
+          "Father/Husband Name": "SOHAN",
+          Mobile: 9991811596,
+        },
+        {
+          Name: "POOJA",
+          "Father/Husband Name": "AJAY KUMAR",
+          Mobile: 9813578210,
+        },
+        {
+          Name: "SOMNATH",
+          "Father/Husband Name": "BHAGWAN DASS",
+          Mobile: 8168010799,
+        },
+        {
+          Name: "AASHA",
+          "Father/Husband Name": "PAWAN KUMAR",
+          Mobile: 9671989899,
+        },
+        {
+          Name: "GULSHAN KUMAR",
+          "Father/Husband Name": "MAHENDER",
+          Mobile: 9996677190,
+        },
+        {
+          Name: "POONAM",
+          "Father/Husband Name": "SUMER CHAND",
+          Mobile: 9211465997,
+        },
+        {
+          Name: "AJAY KUMAR",
+          "Father/Husband Name": "JAI SINGH",
+          Mobile: 9996445850,
+        },
+        {
+          Name: "RITU",
+          "Father/Husband Name": "SUMIT",
+          Mobile: 9992910588,
+        },
+        {
+          Name: "DEEPAK MADAD",
+          "Father/Husband Name": "SURENDER SINGH",
+          Mobile: 999227990,
+        },
+        {
+          Name: "SHASHI BALA",
+          "Father/Husband Name": "BALWINDER",
+          Mobile: 9991408239,
+        },
+        {
+          Name: "DESRAJ",
+          "Father/Husband Name": "MANGE RAM",
+          Mobile: 9991424982,
+        },
+        {
+          Name: "REETA DEVI",
+          "Father/Husband Name": "DINESH KUMAR",
+          Mobile: 9996837170,
+        },
+        {
+          Name: "PARTAP SINGH",
+          "Father/Husband Name": "RATI RAM",
+          Mobile: 7027520019,
+        },
+        {
+          Name: "RAJKAMAL",
+          "Father/Husband Name": "SUKHBIR SINGH",
+          Mobile: 9813557474,
+        },
+        {
+          Name: "AMIT KUMAR",
+          "Father/Husband Name": "MAMAN RAM",
+          Mobile: 9069591000,
+        },
+        {
+          Name: "SURENDER KUMAR",
+          "Father/Husband Name": "VIJENDER SINGH",
+          Mobile: 9671352005,
+        },
+        {
+          Name: "SEEMA RANI",
+          "Father/Husband Name": "ANIL KUMAR",
+          Mobile: 9817927820,
+        },
+        {
+          Name: "SANDEEP KUMAR",
+          "Father/Husband Name": "MAHENDER SINGH",
+          Mobile: 8398901303,
+        },
+        {
+          Name: "SAROJ DEVI",
+          "Father/Husband Name": "RAJESH KUMAR",
+          Mobile: 9050411500,
+        },
+        {
+          Name: "MANDEEP SINGH",
+          "Father/Husband Name": "PAHAL SINGH",
+          Mobile: 9613000064,
+        },
+        {
+          Name: "LAXMI",
+          "Father/Husband Name": "SONU",
+          Mobile: 8053470222,
+        },
+        {
+          Name: "VISHAL",
+          "Father/Husband Name": "VIRENDER",
+          Mobile: 9350164199,
+        },
+        {
+          Name: "POOJA RANI",
+          "Father/Husband Name": "GOVINDA",
+          Mobile: 9992410800,
+        },
+        {
+          Name: "TEJBIR SINGH",
+          "Father/Husband Name": "RANJEET SINGH",
+          Mobile: 9466775133,
+        },
+        {
+          Name: "BHARTI",
+          "Father/Husband Name": "RAVINDER KUMAR",
+          Mobile: 8295501100,
+        },
+        {
+          Name: "JAGMAAL SINGH",
+          "Father/Husband Name": "JAI SINGH",
+          Mobile: 8708068131,
+        },
+        {
+          Name: "KIRAN",
+          "Father/Husband Name": "DALER",
+          Mobile: 8929778000,
+        },
+        {
+          Name: "GOVIND",
+          "Father/Husband Name": "DEVI SINGH",
+          Mobile: 9992061779,
+        },
+        {
+          Name: "MUKESH",
+          "Father/Husband Name": "ROHIT KUMAR",
+          Mobile: 9813864892,
+        },
+        {
+          Name: "ANKIT KUMAR",
+          "Father/Husband Name": "KRISHAN LAL",
+          Mobile: 9991980079,
+        },
+        {
+          Name: "SAPNA",
+          "Father/Husband Name": "VIKRAM",
+          Mobile: 7015498960,
+        },
+        {
+          Name: "KAJAL",
+          "Father/Husband Name": "KARAMBIR",
+          Mobile: 8199918262,
+        },
+      ];
+
+      function searchFamilyID() {
+        const searchField = document.getElementById("searchField").value;
+        console.log("Search input:", searchField); // Log the search input
+        const resultDiv = document.getElementById("result");
+        const result = data.find((item) => item.Mobile == Number(searchField));
+
+        if (result) {
+          resultDiv.innerHTML = `
+                    <p class="available">Data is available</p>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Father/Husband Name</th>
+                            <th>Mobile</th>
+                        </tr>
+                        <tr>
+                            <td>${result.Name}</td>
+                            <td>${result["Father/Husband Name"]}</td>
+                            <td>${result.Mobile}</td>
+                        </tr>
+                    </table>
+                `;
+        } else {
+          resultDiv.innerHTML = `
+                    <p class="not-available"><strong>No record found, please contact CPLO Rinku Saini (9671203033)</strong></p>
+                `;
+        }
+      }
+    </script>
+  </body>
+</html>
